@@ -45,8 +45,11 @@
 			<if test="status != null">
 				status = #{status}
 			</if>
-			where id = #{id}
 		</set>
+		where id = #{id}
 	</update>
+
+
+
 
 </mapper>
