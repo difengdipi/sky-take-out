@@ -114,4 +114,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         
     }
     
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     */
+    public void startOrStop(Integer status, Long id) {
+        //写一个动态的sql,实现动态更新员工数据
+       Employee employee= Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        
+        employeeMapper.update(employee);
+    }
+    
 }
