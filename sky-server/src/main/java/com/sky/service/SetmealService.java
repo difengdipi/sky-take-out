@@ -1,5 +1,7 @@
 package com.sky.service;
 
+import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.result.PageResult;
 import com.sky.vo.SetmealVO;
 
 /**
@@ -13,4 +15,10 @@ public interface SetmealService {
      * @param setmealVO
      */
     void save(SetmealVO setmealVO);
+    
+    /**
+     * 套餐分页查询
+     * @return
+     */
+    PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }
