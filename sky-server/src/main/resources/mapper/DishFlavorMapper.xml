@@ -11,4 +11,11 @@
 			(#{df.dishId},#{df.name},#{df.value})
 		</foreach>
 	</insert>
+<!--	根据菜品ids批量删除口味表中的数据-->
+	<delete id="deleteByDishIds">
+		delete  from dish_flavor where dish_id in
+		<foreach collection="dishIds" item="dishids" separator="," open="(" close=")">
+			#{dishids}
+		</foreach>
+	</delete>
 </mapper>
