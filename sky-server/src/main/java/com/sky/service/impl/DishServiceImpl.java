@@ -1,5 +1,6 @@
 package com.sky.service.impl;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
@@ -16,6 +17,7 @@ import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanMetadataAttribute;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,5 +118,47 @@ public class DishServiceImpl implements DishService {
         //根据菜品id集合批量删除关联的口味数据
         dishFlavorMapper.deleteByDishIds(ids);
         
+    }
+    
+    /**
+     * 根据菜品id查询对应的菜品和口味表
+     * @param id
+     * @return
+     */
+    public DishVO getByIdWithFlavor(Long id) {
+        //根据id查询菜品数据
+        Dish dish = dishMapper.getById(id);
+        
+        //根据菜品id查询口味表
+         List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
+        
+         //将查询后的值赋给dishVo
+        DishVO dishVO =  new DishVO();
+        BeanUtils.copyProperties(dish,dishVO);
+        dishVO.setFlavors(flavors);
+        
+        return dishVO;
+    }
+    
+    /**
+     * 根据id修改菜品数据和口味信息
+     * @param dishDTO
+     */
+    public void updatewithFlavor(DishDTO dishDTO) {
+        //修改菜品表基本信息
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO,dish);
+        dishMapper.update(dish);
+        //先删除原有口味数据，在插入现有的口味数据
+        dishFlavorMapper.deleteByDishId(dishDTO.getId());
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if(flavors != null && flavors.size() > 0){
+            //拥有口味数据
+            flavors.forEach(dishFlavor -> {
+                dishFlavor.setDishId(dishDTO.getId());
+            });
+            //1.批量插入口味
+            dishFlavorMapper.insertBatch(flavors);
+        }
     }
 }
