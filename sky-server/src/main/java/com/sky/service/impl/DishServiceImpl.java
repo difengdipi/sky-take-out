@@ -3,6 +3,7 @@ package com.sky.service.impl;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.annotation.AutoFill;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
@@ -17,6 +18,7 @@ import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.BeanMetadataAttribute;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,5 +162,16 @@ public class DishServiceImpl implements DishService {
             //1.批量插入口味
             dishFlavorMapper.insertBatch(flavors);
         }
+    }
+    
+    /**
+     * 根据id起售停售菜品
+     * @param status
+     */
+    public void status(Long id, Integer status) {
+        Dish dish = new Dish();
+        dish.setStatus(status);
+        dish.setId(id);
+        dishMapper.update(dish);
     }
 }

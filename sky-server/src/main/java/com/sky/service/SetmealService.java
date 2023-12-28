@@ -4,6 +4,8 @@ import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.vo.SetmealVO;
 
+import java.util.List;
+
 /**
  * @description：套餐相应接口
  * @author： 周海
@@ -21,4 +23,10 @@ public interface SetmealService {
      * @return
      */
     PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+    
+    /**
+     * 批量删除套餐
+     * @param ids
+     */
+    void deleteBatch(List<Long> ids);
 }

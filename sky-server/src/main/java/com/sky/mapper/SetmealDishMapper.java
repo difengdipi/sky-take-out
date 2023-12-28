@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Mapper
 public interface SetmealDishMapper {
-   
+    
     /**
      * 根据菜品ID查询对应的套餐id
      * @param dishIds
@@ -25,4 +25,10 @@ public interface SetmealDishMapper {
      * @param setmealDishList
      */
     void insert(List<SetmealDish> setmealDishList);
+    
+    /**
+     * 根据套餐id删除对应套餐菜品关系表中的数据
+     * @param setmealid
+     */
+    void deleteByIds(List<Long> setmealid);
 }
