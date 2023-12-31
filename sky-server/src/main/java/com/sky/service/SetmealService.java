@@ -1,5 +1,6 @@
 package com.sky.service;
 
+import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.vo.SetmealVO;
@@ -12,12 +13,7 @@ import java.util.List;
  * @create： 2023/12/27
  */
 public interface SetmealService {
-    /**
-     * 新增套餐
-     * @param setmealVO
-     */
-    void save(SetmealVO setmealVO);
-    
+   
     /**
      * 套餐分页查询
      * @return
@@ -29,4 +25,10 @@ public interface SetmealService {
      * @param ids
      */
     void deleteBatch(List<Long> ids);
+    
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     */
+    void saveWithDish(SetmealDTO setmealDTO);
 }

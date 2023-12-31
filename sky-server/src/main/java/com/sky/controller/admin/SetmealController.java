@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.github.pagehelper.PageHelper;
+import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
@@ -28,11 +29,16 @@ public class SetmealController {
     
     @Autowired
     private SetmealService setmealService;
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     * @return
+     */
     @PostMapping
     @ApiOperation("新增套餐")
-    public Result save(@RequestBody SetmealVO setmealVO){
-        log.info("新增套餐"+setmealVO);
-        setmealService.save(setmealVO);
+    public Result save(@RequestBody SetmealDTO setmealDTO) {
+        log.info("新增套餐"+setmealDTO);
+        setmealService.saveWithDish(setmealDTO);
         return Result.success();
     }
     

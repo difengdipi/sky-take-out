@@ -1,4 +1,5 @@
 sky:
+# 数据库
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: 127.0.0.1
@@ -6,11 +7,18 @@ sky:
     database: sky_take_out
     username: root
     password: root
-
+#oss服务器
   alioss:
     endpoint: oss-cn-hangzhou.aliyuncs.com
     access-key-id: LTAI5tFuARKQ8BddZvq3Bdx4
     access-key-secret: u8FLoatk2XznrtFOYskAHa715x8j4q
     bucket-name: web-zh183
+
+  redis:
+    host: 192.168.208.138
+    port: 6379
+    password: Zhlyc123.
+    database: 0
+
 
 

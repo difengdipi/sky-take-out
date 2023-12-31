@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
+import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.entity.Setmeal;
@@ -37,35 +38,6 @@ public class SetmealServiceImpl implements SetmealService {
     
     
    
-    /**
-     * 新增套餐
-     * @param setmealVO
-     */
-    @Transactional
-    public void save(SetmealVO setmealVO) {
-        //给setmeal进行拷贝赋值
-        Setmeal setmeal = new Setmeal();
-        BeanUtils.copyProperties(setmealVO,setmeal);
-        
-        setmealMapper.insert(setmeal);
-        System.out.println("套餐id"+ setmeal.getId());
-        //获取套餐id
-        Long setmealid = setmeal.getId();
-       
-        List<SetmealDish> setmealDishList = setmealVO.getSetmealDishes();
-       
-       
-        if(setmealDishList != null && setmealDishList.size() > 0){
-           //套餐中包含的菜品
-            setmealDishList.forEach(SetmealDish->{
-                SetmealDish.setSetmealId(setmealid);
-            });
-            
-            //批量插入菜品数据
-        setmealDishMapper.insert(setmealDishList);
-        }
-  
-    }
     
     /**
      * 套餐分页查询
@@ -99,5 +71,29 @@ public class SetmealServiceImpl implements SetmealService {
        setmealMapper.deleteByIds(ids);
         //删除对应套餐菜品关系
         setmealDishMapper.deleteByIds(ids);
+    }
+    
+    /**
+     * 新增套餐，同时需要保存套餐和菜品的关联关系
+     * @param setmealDTO
+     */
+    @Transactional
+    public void saveWithDish(SetmealDTO setmealDTO) {
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+        
+        //向套餐表插入数据
+        setmealMapper.insert(setmeal);
+        
+        //获取生成的套餐id
+        Long setmealId = setmeal.getId();
+        
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+        setmealDishes.forEach(setmealDish -> {
+            setmealDish.setSetmealId(setmealId);
+        });
+        
+        //保存套餐和菜品的关联关系
+        setmealDishMapper.insertBatch(setmealDishes);
     }
 }
