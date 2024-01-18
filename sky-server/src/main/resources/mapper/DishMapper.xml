@@ -26,7 +26,7 @@
 		order by create_time desc
 	</select>
 
-<!--	根据菜品id批量删除菜品数据-->
+	<!--	根据菜品id批量删除菜品数据-->
 	<delete id="deleteByIds">
 		delete  from dish where id in 
 		<foreach collection="ids" open="(" close=")" separator="," item="id">
@@ -64,6 +64,23 @@
 		</set>
 		where id = #{id}
 	</update>
+
+	<select id="list" resultType="com.sky.entity.Dish">
+		select * from dish
+		<where>
+			<if test="name != null">
+				and name like concat('%',#{name},'%')
+			</if>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+		order by create_time desc
+	</select>
+
 
 
 </mapper>

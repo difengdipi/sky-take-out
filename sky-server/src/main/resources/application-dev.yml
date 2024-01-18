@@ -13,12 +13,16 @@ sky:
     access-key-id: LTAI5tFuARKQ8BddZvq3Bdx4
     access-key-secret: u8FLoatk2XznrtFOYskAHa715x8j4q
     bucket-name: web-zh183
-
+#本地redis的虚拟机服务
   redis:
     host: 192.168.208.138
     port: 6379
     password: Zhlyc123.
     database: 0
+#  微信小程序服务
+  wechat:
+    appid: wx4bcf9e2f64d8e76f
+    secret: 45c085eff8bcfa585a1c38a1d85ffa80
 
 
 
