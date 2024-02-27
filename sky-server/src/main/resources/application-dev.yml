@@ -15,7 +15,7 @@ sky:
     bucket-name: web-zh183
 #本地redis的虚拟机服务
   redis:
-    host: 192.168.208.138
+    host: 192.168.208.139
     port: 6379
     password: Zhlyc123.
     database: 0
