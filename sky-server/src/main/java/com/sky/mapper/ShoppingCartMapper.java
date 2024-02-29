@@ -9,7 +9,7 @@ import java.util.List;
  * @author 周海
  * @version v1.0.0
  * @Package : com.sky.mapper
- * @Description : TODO
+ * @Description :
  * @Create on : 2024/2/26
  **/
 @Mapper
@@ -45,4 +45,11 @@ public interface ShoppingCartMapper {
      */
     @Delete("delete from shopping_cart where user_id = #{userId}")
     void deleteByUserId(Long userId);
+
+    /**
+     * 根据用户ID删除购物车信息
+     * @param id
+     */
+    @Delete("delete from shopping_cart where id = #{id}")
+    void deleteById(Long id);
 }

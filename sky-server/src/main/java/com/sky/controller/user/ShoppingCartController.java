@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @Package : com.sky.controller.user
- * @Description : TODO
+ * @Description :
  * @Create on : 2024/2/26
  * @author 周海
  * @version v1.0.0
@@ -63,6 +63,18 @@ public class ShoppingCartController {
     @DeleteMapping("/clean")
     public Result clean(){
         shoppingCartService.cleanShoppingCart();
+        return Result.success();
+    }
+
+    /**
+     * 删除购物车中一个商品
+     * @return
+     */
+    @ApiOperation("删除购物车中一个商品")
+    @PostMapping("/sub")
+    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO){
+        log.info("删除购物车中一个商品，商品：{}", shoppingCartDTO);
+        shoppingCartService.deleteShoppingCart(shoppingCartDTO);
         return Result.success();
     }
 
