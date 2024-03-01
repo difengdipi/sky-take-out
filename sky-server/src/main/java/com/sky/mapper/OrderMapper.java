@@ -41,7 +41,7 @@ public interface OrderMapper {
      * @return
      */
     @Select("select * from orders where id = #{orderId}")
-    Orders SelectById(Integer orderId);
+    Orders SelectById(Long orderId);
 
     /**
      * 根据id号查找订单信息

@@ -53,4 +53,12 @@ public interface AddressBookMapper {
     @Delete("delete from address_book where id = #{id}")
     void deleteById(Long id);
 
+    /**
+     * 根据Id查找地址
+     * @param addressBookId
+     * @return
+     */
+
+    @Select("select * from address_book where id = #{addressBookId}")
+    String SelectById(Long addressBookId);
 }

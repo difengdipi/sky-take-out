@@ -23,6 +23,7 @@ sky:
   wechat:
     appid: wx4bcf9e2f64d8e76f
     secret: 45c085eff8bcfa585a1c38a1d85ffa80
+#    微信支付
 #    mchid: 1561414331
 #    mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
 #    privateKeyFilePath: C:\software\apiclient_key.pem

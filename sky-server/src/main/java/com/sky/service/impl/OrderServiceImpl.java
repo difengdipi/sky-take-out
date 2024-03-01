@@ -175,30 +175,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 查询订单详情
-     * @return
-     */
-    @Override
-    @Transactional
-    public OrderVO OrderDetailByOrderId(String orderId) {
-        //判断orderId是否为空
-        if(orderId == null ){
-            throw new OrderBusinessException(MessageConstant.UNKNOWN_ERROR);
-        }
-        //1.根据orderid查找订单明细表中的订单数据
-        List<OrderDetail> orderDetailList = orderDetailMapper.selectByOrderId(orderId);
-        //2.根据orderId查找订单菜品信息
-        Orders order = orderMapper.SelectById(Integer.valueOf(orderId));
-
-        OrderVO orderVO = new OrderVO();
-        BeanUtils.copyProperties(order,orderVO);
-        orderVO.setOrderDetailList(orderDetailList);
-
-        return orderVO;
-
-    }
-
-    /**
      * 用户端订单分页查询
      *
      * @param pageNum
@@ -233,9 +209,28 @@ public class OrderServiceImpl implements OrderService {
                 list.add(orderVO);
             }
         }
-        System.out.println(list);
         return new PageResult(page.getTotal(), list);
     }
 
+    /**
+     * 查询订单详情
+     * @return
+     */
+    @Transactional
+    public OrderVO OrderDetailByOrderId(Long orderId) {
+            //1 根据id查询订单
+            Orders orders = orderMapper.SelectById(orderId);
+
+            // 2查询该订单对应的菜品/套餐明细
+            List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orders.getId());
+
+            // 3将该订单及其详情封装到OrderVO并返回
+            //TODO:订单的地址返回为NULL,这里有一点错误
+            OrderVO orderVO = new OrderVO();
+            BeanUtils.copyProperties(orders, orderVO);
+            orderVO.setOrderDetailList(orderDetailList);
+
+            return orderVO;
+        }
 
 }

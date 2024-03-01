@@ -40,7 +40,7 @@ public interface OrderService {
      * 查询订单详情
      * @return
      */
-    OrderVO OrderDetailByOrderId(String orderId);
+    OrderVO OrderDetailByOrderId(Long orderId);
     /**
      * 历史订单查询
      * @param page
