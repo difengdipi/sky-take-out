@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * @Description :
@@ -83,6 +82,18 @@ public class OrderController {
         log.info("查询订单详情，订单id:{}",id);
         OrderVO orderVO = orderService.OrderDetailByOrderId(id);
         return Result.success(orderVO);
+    }
+
+    /**
+     * 取消订单
+     * @return
+     */
+    @PutMapping("/cancel/{id}")
+    @ApiOperation("取消订单")
+    public  Result  cancel(@PathVariable Long id){
+        log.info("用户取消订单，订单ID:{}",id);
+        orderService.cancel(id);
+        return Result.success();
     }
 
 }

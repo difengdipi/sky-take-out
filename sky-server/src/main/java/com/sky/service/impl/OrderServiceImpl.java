@@ -212,6 +212,8 @@ public class OrderServiceImpl implements OrderService {
         return new PageResult(page.getTotal(), list);
     }
 
+
+
     /**
      * 查询订单详情
      * @return
@@ -233,4 +235,19 @@ public class OrderServiceImpl implements OrderService {
             return orderVO;
         }
 
+    /**
+     * 用户取消订单
+     * @param id
+     */
+    public void cancel(Long id) {
+        //取消订单的前提：1.该订单不在派送中 2.该订单未接单 3.联系管理员，通过管理员进行操作
+        Orders orders = orderMapper.SelectById(id);
+        if(orders != null && orders.getStatus() == 3 && orders.getStatus() == 4){
+            throw new OrderBusinessException("订单已在制作");
+        }
+        //修改订单的状态
+        orders.setStatus(6);
+        orderMapper.updateStatus(orders.getStatus(),orders.getPayStatus(),orders.getCheckoutTime(),id);
+
+    }
 }
