@@ -18,6 +18,7 @@ import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
@@ -249,5 +250,25 @@ public class OrderServiceImpl implements OrderService {
         orders.setStatus(6);
         orderMapper.updateStatus(orders.getStatus(),orders.getPayStatus(),orders.getCheckoutTime(),id);
 
+    }
+
+    /**
+     * 用户再来一单
+     * @return
+     */
+    public void repetition(Long OrderId) {
+        //根据订单Id查找订单详细
+        List<OrderDetail> orderDetail = orderDetailMapper.SelectByOrderId(OrderId);
+        //获取菜品和套餐信息，并放入购物车中
+        //TODO：这里有BUG,数量查出来不对
+        //TODO：这里可以优化，调用Sql过多，效率低
+        for(OrderDetail od : orderDetail){
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setUserId(BaseContext.getCurrentId());
+            shoppingCart.setCreateTime(LocalDateTime.now());
+            BeanUtils.copyProperties(od,shoppingCart);
+            System.out.println(shoppingCart);
+            shoppingCartMapper.insert(shoppingCart);
+        }
     }
 }
