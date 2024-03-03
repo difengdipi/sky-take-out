@@ -400,6 +400,20 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /**
+     * 完成订单
+     * @param id
+     * @return
+     */
+    public void complete(Long id) {
+        //修改订单的状态即可
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.COMPLETED)
+                .build();
+        orderMapper.update(orders);
+    }
+
 
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
         // 需要返回订单菜品信息，自定义OrderVO响应结果
