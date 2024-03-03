@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
@@ -54,10 +55,18 @@ public interface OrderMapper {
     @Update("update orders set status = #{orderStatus},pay_status = #{orderPaidStatus} ,checkout_time = #{check_out_time} where id = #{id}")
     void updateStatus(Integer orderStatus, Integer orderPaidStatus, LocalDateTime check_out_time, Long id);
 
+
+
     /**
      * 根据订单状态查找订单
      * @return
      */
     @Select("select * from orders")
     List<Orders> SelectByStatus();
+
+    /**
+     * 根据订单Id修改订单的状态
+     * @param ordersConfirmDTO
+     */
+
 }
