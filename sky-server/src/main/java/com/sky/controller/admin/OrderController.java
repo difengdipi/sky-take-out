@@ -3,6 +3,7 @@ package com.sky.controller.admin;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
+import com.sky.dto.OrdersCancelDTO;
 import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersRejectionDTO;
@@ -101,7 +102,18 @@ public class OrderController {
         return Result.success();
     }
 
-
+    /**
+     * 取消订单
+     * @param ordersCancelDTO
+     * @return
+     */
+    @PutMapping("/cancel")
+    @ApiOperation("取消订单")
+    public Result cancel(@RequestBody OrdersCancelDTO ordersCancelDTO){
+        log.info("取消订单，取消订单Id:{}",ordersCancelDTO);
+        orderService.AdminCancel(ordersCancelDTO);
+        return Result.success();
+    }
 
 
 }

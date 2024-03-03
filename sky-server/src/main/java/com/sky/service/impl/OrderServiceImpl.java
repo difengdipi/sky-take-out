@@ -358,7 +358,25 @@ public class OrderServiceImpl implements OrderService {
 
         Orders orders = Orders.builder()
                 .id(rejectionDTO.getId())
-                .cancelReason(rejectionDTO.getRejectionReason())
+                .rejectionReason(rejectionDTO.getRejectionReason())
+                .cancelTime(LocalDateTime.now())
+                .status(Orders.CANCELLED)
+                .build();
+
+        orderMapper.update(orders);
+    }
+
+    /**
+     * 管理员取消订单
+     * @param ordersCancelDTO
+     * @return
+     */
+    public void AdminCancel(OrdersCancelDTO ordersCancelDTO) {
+
+        Orders orders = Orders.builder()
+                .id(ordersCancelDTO.getId())
+                .cancelReason(ordersCancelDTO.getCancelReason())
+                .cancelTime(LocalDateTime.now())
                 .status(Orders.CANCELLED)
                 .build();
 
