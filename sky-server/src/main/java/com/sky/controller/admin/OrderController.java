@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
+import com.sky.dto.OrdersRejectionDTO;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.result.PageResult;
@@ -48,6 +49,10 @@ public class OrderController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 各个状态的订单数量统计
+     * @return
+     */
     @GetMapping("/statistics")
     @ApiOperation("各个状态的订单数量统计")
     public  Result<OrderStatisticsVO> statistics(){
@@ -57,6 +62,11 @@ public class OrderController {
 
     }
 
+    /**
+     * 查询订单详情
+     * @param id
+     * @return
+     */
     @GetMapping("/details/{id}")
     @ApiOperation("查询订单详情")
     public Result<OrderVO> details(@PathVariable Long id){
@@ -65,13 +75,32 @@ public class OrderController {
         return Result.success(orderVO);
     }
 
+    /**
+     * 接单
+     * @param ordersConfirmDTO
+     * @return
+     */
     @ApiOperation("接单")
     @PutMapping("/confirm")
     public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO){
-        log.info("接单,订单Id:{}",ordersConfirmDTO);
+        log.info("接单,订单Id:{}",ordersConfirmDTO.getId());
         orderService.confirm(ordersConfirmDTO);
         return Result.success();
     }
+
+    /**
+     * 拒单
+     * @param rejectionDTO
+     * @return
+     */
+    @PutMapping("/rejection")
+    @ApiOperation("拒单")
+    public Result rejection(@RequestBody OrdersRejectionDTO rejectionDTO){
+        log.info("拒单，拒单Id:{}",rejectionDTO);
+        orderService.rejection(rejectionDTO);
+        return Result.success();
+    }
+
 
 
 

@@ -349,6 +349,22 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 拒单
+     * @param rejectionDTO
+     * @return
+     */
+    public void rejection(OrdersRejectionDTO rejectionDTO) {
+
+        Orders orders = Orders.builder()
+                .id(rejectionDTO.getId())
+                .cancelReason(rejectionDTO.getRejectionReason())
+                .status(Orders.CANCELLED)
+                .build();
+
+        orderMapper.update(orders);
+    }
+
 
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
         // 需要返回订单菜品信息，自定义OrderVO响应结果
