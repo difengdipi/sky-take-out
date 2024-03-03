@@ -18,6 +18,7 @@ import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -372,7 +373,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     public void AdminCancel(OrdersCancelDTO ordersCancelDTO) {
-
+        //修改订单的状态
         Orders orders = Orders.builder()
                 .id(ordersCancelDTO.getId())
                 .cancelReason(ordersCancelDTO.getCancelReason())
@@ -381,6 +382,22 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(orders);
+    }
+
+
+    /**
+     * 派送订单
+     * @param id
+     * @return
+     */
+    public void delivery(Long id) {
+        //修改订单的状态即可
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.DELIVERY_IN_PROGRESS)
+                .build();
+        orderMapper.update(orders);
+
     }
 
 
