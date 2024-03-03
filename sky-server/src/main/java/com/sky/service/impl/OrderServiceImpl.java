@@ -110,7 +110,6 @@ public class OrderServiceImpl implements OrderService {
 
         orderDetailMapper.insertBatch(orderDetailslist);
         //3.下单成功并且后，清空用户的购物车数据
-        //TODO:应该是支付成功后清空用户的购物车数据,而不是进入下单页面就清空购物车的数据
         shoppingCartMapper.deleteByUserId(userId);
 
         //4.封装Vo返回结果
@@ -231,9 +230,12 @@ public class OrderServiceImpl implements OrderService {
             List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orders.getId());
 
             // 3将该订单及其详情封装到OrderVO并返回
-            //TODO:订单的地址返回为NULL,这里有一点错误
+
+            AddressBook addressBook = addressBookMapper.SelectAddressByOrderID(orders.getAddressBookId());
+
             OrderVO orderVO = new OrderVO();
             BeanUtils.copyProperties(orders, orderVO);
+            orderVO.setAddress(addressBook.getProvinceName()+addressBook.getCityName()+addressBook.getDistrictName()+addressBook.getDetail());
             orderVO.setOrderDetailList(orderDetailList);
 
             return orderVO;
@@ -319,7 +321,6 @@ public class OrderServiceImpl implements OrderService {
                 }
             } else if (od.getStatus() == orders.CONFIRMED) {
                 //已接单的数量
-
                 if(orderStatisticsVO.getConfirmed() == null){
                     orderStatisticsVO.setConfirmed(1);
                 }else {

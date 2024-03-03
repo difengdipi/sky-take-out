@@ -54,11 +54,11 @@ public interface AddressBookMapper {
     void deleteById(Long id);
 
     /**
-     * 根据Id查找地址
-     * @param addressBookId
+     * 根据id查地址
+     *
+     * @param id
      * @return
      */
-
-    @Select("select * from address_book where id = #{addressBookId}")
-    String SelectById(Long addressBookId);
+    @Select("SELECT province_name , city_name, district_name ,detail from address_book where id = #{id}")
+    AddressBook SelectAddressByOrderID(Long id);
 }
