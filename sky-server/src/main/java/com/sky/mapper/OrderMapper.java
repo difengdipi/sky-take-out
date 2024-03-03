@@ -68,5 +68,9 @@ public interface OrderMapper {
      * 根据订单Id修改订单的状态
      * @param ordersConfirmDTO
      */
+    @Update("update  orders set status = #{ordersConfirmDTO.status} where id = #{ordersConfirmDTO.id}")
+    void updateStatusById(OrdersConfirmDTO ordersConfirmDTO);
 
+    @Select("select * from orders where status = #{status} and order_time < #{orderTime}" )
+    List<Orders> getByStatusAndOrderTimeLT(Integer status,LocalDateTime orderTime);
 }
