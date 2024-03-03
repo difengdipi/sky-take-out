@@ -20,6 +20,7 @@ import com.sky.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
@@ -299,6 +300,44 @@ public class OrderServiceImpl implements OrderService {
         return new PageResult(page.getTotal(), orderVOList);
     }
 
+    /**
+     * 各个状态的订单数量统计
+     * @return
+     */
+    public OrderStatisticsVO statistics() {
+        //搜索各个状态的订单
+        List<Orders> order = orderMapper.SelectByStatus();
+        //将订单进行分类处理
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+        for(Orders od:order){
+            if(od.getStatus() == orders.TO_BE_CONFIRMED){
+                //待接单的数量
+                if(orderStatisticsVO.getToBeConfirmed() == null){
+                    orderStatisticsVO.setToBeConfirmed(1);
+                }else{
+                    orderStatisticsVO.setToBeConfirmed(orderStatisticsVO.getToBeConfirmed()+1);
+                }
+            } else if (od.getStatus() == orders.CONFIRMED) {
+                //已接单的数量
+
+                if(orderStatisticsVO.getConfirmed() == null){
+                    orderStatisticsVO.setConfirmed(1);
+                }else {
+                    orderStatisticsVO.setConfirmed(orderStatisticsVO.getConfirmed() + 1);
+                }
+            } else if (od.getStatus() ==orders.DELIVERY_IN_PROGRESS ) {
+                //派送中的数量
+               if(orderStatisticsVO.getDeliveryInProgress() == null){
+                   orderStatisticsVO.setDeliveryInProgress(1);
+               }else{
+               orderStatisticsVO.setDeliveryInProgress(orderStatisticsVO.getDeliveryInProgress()+1);
+               }
+            }
+        }
+        return orderStatisticsVO;
+    }
+
+
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
         // 需要返回订单菜品信息，自定义OrderVO响应结果
         List<OrderVO> orderVOList = new ArrayList<>();
@@ -337,5 +376,8 @@ public class OrderServiceImpl implements OrderService {
         // 将该订单对应的所有菜品信息拼接在一起
         return String.join("", orderDishList);
     }
+
+
+
 
 }
