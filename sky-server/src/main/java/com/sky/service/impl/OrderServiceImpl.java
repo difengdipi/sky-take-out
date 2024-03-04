@@ -450,8 +450,26 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 客户催单
+     * @param orderId
+     */
+    public void reminder(Long orderId) {
+        //查询订单
+        Orders orders = orderMapper.SelectById(orderId);
+        //校验订单是否存在
+        if(orders == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        Map map = new HashMap();
+        map.put("type",2);
+        map.put("orderId",orderId);
+        map.put("content","订单号:"+orders.getNumber());
+
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
 
 
+    }
 
 
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
