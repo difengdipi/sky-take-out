@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement //开启注解方式的事务管理
 @Slf4j
-@EnableCaching //开启springCache的缓存事务代理
-@EnableScheduling//开启任务调度--》定时任务
+@EnableCaching  //开启springCache的缓存事务代理
+@EnableScheduling //开启任务调度--》定时任务
 public class SkyApplication {
     public static void main(String[] args) {
         SpringApplication.run(SkyApplication.class, args);

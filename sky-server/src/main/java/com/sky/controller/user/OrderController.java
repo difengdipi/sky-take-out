@@ -108,4 +108,11 @@ public class OrderController {
         return Result.success();
     }
 
+
+    public Result  ss(){
+        log.info("顾客催单");
+
+        return Result.success();
+    }
+
 }

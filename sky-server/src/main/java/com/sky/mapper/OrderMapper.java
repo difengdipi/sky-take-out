@@ -73,4 +73,11 @@ public interface OrderMapper {
 
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}" )
     List<Orders> getByStatusAndOrderTimeLT(Integer status,LocalDateTime orderTime);
+
+    /**
+     * 查询全部的订单信息
+     * @return
+     */
+    @Select("select * from orders ")
+    List<Orders> SelectAll();
 }

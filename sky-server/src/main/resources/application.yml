@@ -46,6 +46,11 @@ sky:
     user-secret-key:  itheima
     user-ttl: 72000000000
     user-token-name: authentication
+#    开启地图配置
+  shop:
+    address: ${sky.shop.address}
+    baidu:
+      ak: ${sky.baidu.ak}
   #小程序的具体配置
   wechat:
     appid: ${sky.wechat.appid}
