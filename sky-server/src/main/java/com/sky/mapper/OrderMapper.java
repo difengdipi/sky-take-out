@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description :
@@ -80,4 +81,11 @@ public interface OrderMapper {
      */
     @Select("select * from orders ")
     List<Orders> SelectAll();
+
+    /**
+     *  营业额统计
+     * @param map
+     * @return
+     */
+    Double SumByMap(Map map);
 }
