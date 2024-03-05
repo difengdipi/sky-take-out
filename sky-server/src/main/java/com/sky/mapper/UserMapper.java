@@ -6,6 +6,8 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 /**
  * @description：微信程序
  * @author： 周海
@@ -29,4 +31,11 @@ public interface UserMapper {
     
     @Select("select * from user where id = #{id}")
     User getById(Long userId);
+
+    /**
+     * 统计用户数量
+     * @param map
+     * @return
+     */
+    Integer CountByMap(Map map);
 }

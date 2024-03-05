@@ -1,9 +1,12 @@
 package com.sky.service.impl;
 
 import com.sky.entity.Orders;
+import com.sky.entity.User;
 import com.sky.mapper.OrderMapper;
+import com.sky.mapper.UserMapper;
 import com.sky.service.ReportService;
 import com.sky.vo.TurnoverReportVO;
+import com.sky.vo.UserReportVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +15,7 @@ import org.w3c.dom.ls.LSException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description :
@@ -27,7 +27,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private OrderMapper orderMapper;
-
+    @Autowired
+    private UserMapper userMapper;
     /**
      * 营业额统计
      * @param begin
@@ -70,6 +71,52 @@ public class ReportServiceImpl implements ReportService {
                 .builder()
                 .dateList( StringUtils.join(dateList, ","))
                 .turnoverList(StringUtils.join(turnoverList, ","))
+                .build();
+    }
+
+    /**
+     * 用户统计
+     * @param begin
+     * @param end
+     * @return
+     */
+    public UserReportVO userStatistics(LocalDate begin, LocalDate end) {
+        //先计算日期
+        List<LocalDate> localDateList = new ArrayList<>();
+        localDateList.add(begin);
+
+        while (!begin.equals(end)){
+            begin = begin.plusDays(1);
+            localDateList.add(begin);
+        }
+
+        //新用户列表
+        List<Integer> newUserList = new ArrayList<>();
+        //截止到每一天的用户的总数量
+        List<Integer> totalUserList = new ArrayList<>();
+
+        for (LocalDate localDate : localDateList) {
+            LocalDateTime endTime = LocalDateTime.of(localDate,LocalTime.MAX);
+            LocalDateTime beginTime = LocalDateTime.of(localDate,LocalTime.MIN);
+            //新用户的创建时间在这个区间为新用户
+            //select sum(id) from user where ceate_time < ? and create_time > ?
+            //统计总用户数量
+            //select sum(id) from user where create_time < ?
+            Map map = new HashMap();
+            map.put("end",endTime);
+            Integer totalUser = userMapper.CountByMap(map);
+
+            map.put("begin",beginTime);
+            Integer newUser = userMapper.CountByMap(map);
+            totalUserList.add(totalUser);
+            newUserList.add(newUser);
+
+        }
+
+        return UserReportVO.builder()
+                .dateList(StringUtils.join(localDateList,","))
+                .totalUserList(StringUtils.join(totalUserList,","))
+                .newUserList(StringUtils.join(newUserList,","))
                 .build();
     }
 }
