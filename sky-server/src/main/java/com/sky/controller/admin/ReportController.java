@@ -31,13 +31,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-//    @GetMapping("/ordersStatistics")
-//    @ApiOperation("订单统计")
-//    public Result<OrderReportVO>  ordersStatistics(){
-//        log.info("订单统计:{}", LocalDateTime.now());
-//        OrderReportVO orderReportVO =  reportService.ordersStatistics();
-//        return Result.success(orderReportVO);
-//    }
+
 
     /**
      * 营业额统计
@@ -75,6 +69,22 @@ public class ReportController {
         log.info("用户统计");
         UserReportVO userReportVO = reportService.userStatistics(begin,end);
         return  Result.success(userReportVO);
+    }
+
+    /**
+     * 订单统计
+     * @return
+     */
+    @GetMapping("/ordersStatistics")
+    @ApiOperation("订单统计")
+    public Result<OrderReportVO>  ordersStatistics(
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            LocalDate begin,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            LocalDate end){
+        log.info("订单统计:{}", LocalDateTime.now());
+        OrderReportVO orderReportVO =  reportService.ordersStatistics(begin,end);
+        return Result.success(orderReportVO);
     }
 
 }
