@@ -14,7 +14,7 @@ public interface WorkspaceService {
      * @param end
      * @return
      */
-    BusinessDataVO getBusinessData(LocalDateTime begin, LocalDateTime end);
+        BusinessDataVO getBusinessData(LocalDateTime begin, LocalDateTime end);
 
     /**
      * 查询订单管理数据
