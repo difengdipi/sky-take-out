@@ -11,13 +11,13 @@ sky:
   shop:
     address: 江苏省无锡市锡山区无锡学院李园三号
   baidu:
-    ak: nsXmU7bAd0bXgogsvCZglX9Q57rg6s9t
+    ak: 
 #oss服务器
   alioss:
-    endpoint: oss-cn-hangzhou.aliyuncs.com
-    access-key-id: LTAI5tFuARKQ8BddZvq3Bdx4
-    access-key-secret: u8FLoatk2XznrtFOYskAHa715x8j4q
-    bucket-name: web-zh183
+    endpoint: 
+    access-key-id: 
+    access-key-secret: 
+    bucket-name: 
 #本地redis的虚拟机服务
   redis:
     host: 192.168.208.139
@@ -26,17 +26,8 @@ sky:
     database: 0
 #  微信小程序服务
   wechat:
-    appid: wx4bcf9e2f64d8e76f
-    secret: 45c085eff8bcfa585a1c38a1d85ffa80
+    appid:
+    secret: 
 
-#    微信支付
-#    mchid: 1561414331
-#    mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
-#    privateKeyFilePath: C:\software\apiclient_key.pem
-#    apiV3Key: CZBK51236435wxpay435434323FFDuv3
-#    weChatPayCertFilePat: C:\software\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem
-#    notifyUrl: https://7d5f5eec.r5.cpolar.top/notify/paySuccess
-#    refundNotifyUrl: https://7d5f5eec.r5.cpolar.top/notify/refundSuccess
-#
 
 
